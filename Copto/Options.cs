@@ -117,7 +117,7 @@ namespace Copto
                 ApplyRule(rule.Rule, rule.Callback, rule.Index);
         }
 
-        public void ApplyRule(string rule, Delegate callback, int? index = null)
+        void ApplyRule(string rule, Delegate callback, int? index = null)
         {            
             // Get all the aliases. Prefixes and suffixes are ignored by the matching engine
             var argsNames = rule.TrimStart('-', '/').TrimEnd('=', ':').Split('|');

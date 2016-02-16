@@ -22,6 +22,12 @@ namespace Copto
             Rules.Add(new RuleInfo(rule, callback, index));
         }
 
+        public void Add(string rule, Action callback, int? index = null)
+        {
+            // Call with argument but ignore it
+            Rules.Add(new RuleInfo(rule, new Action<string>((s) => callback()), index));
+        }
+
         public void Add(string rule, Action<string> callback, int? index = null)
         {
             Rules.Add(new RuleInfo(rule, callback, index));

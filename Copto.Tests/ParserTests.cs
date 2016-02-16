@@ -7,18 +7,38 @@ namespace Copto.Tests
     public class ParserTests
     {
 
+        void ValidateResult(Options options, int expectedArguments)
+        {
+            Assert.IsNotNull(options.Arguments, "Arguments should not be null");
+            Assert.AreEqual(expectedArguments, options.Arguments.Count, "The result should have exactly {0} arguments", expectedArguments);
+        }
+
+        void ValidateArgument(Options option, string argumentName, int index, params string[] expectedValues)
+        {
+            var arg = option[argumentName];
+            Assert.IsNotNull(arg, string.Format("Argument {0} should not be null", argumentName));
+            Assert.AreEqual(arg.Index, index, string.Format("Argument {0} should have {1} as index", argumentName, index));
+            Assert.AreEqual(expectedValues.Length, arg.Values.Count, string.Format("Argument {0} should have exactly {1} values", argumentName, expectedValues.Length));
+            for (int i = 0; i < expectedValues.Length; i++)
+            {
+                string expected = expectedValues[i];
+                Assert.IsTrue(arg.Values.Any(v => string.Compare(v, expected, !option.ParsingOptions.CaseSensitive) == 0), string.Format("Argument {0} should contain value {1}", argumentName, expected));
+            }
+        }
+
         [TestMethod()]
+        [TestCategory("Parser")]
         public void TestEmptyArguments()
         {
             var options = Options.Parse(new string[]
             {
             });
 
-            Assert.IsNotNull(options.Arguments);
-            Assert.AreEqual(options.Arguments.Count, 0);
+            ValidateResult(options, 0);
         }
 
         [TestMethod]
+        [TestCategory("Parser")]
         public void TestArgumentsWithoutValue()
         {
             var options = Options.Parse(new string[]
@@ -31,18 +51,18 @@ namespace Copto.Tests
                 "--true/false"
             });
 
-            Assert.IsNotNull(options.Arguments, "Arguments should not be null");
-            Assert.AreEqual(6, options.Arguments.Count);
+            ValidateResult(options, 6);
 
-            Assert.IsNotNull(options["genreport"], "There should be an argument called 'genreport'");
-            Assert.IsNotNull(options["portfolio"], "There should be an argument called 'portfolio'");
-            Assert.IsNotNull(options["stock"], "There should be an argument called 'stock'");
-            Assert.IsNotNull(options["verbose"], "There should be an argument called 'verbose'");
-            Assert.IsNotNull(options["dist-upgrade"], "There should be an argument called 'dist-upgrade'");
-            Assert.IsNotNull(options["true/false"], "There should be an argument called 'true/false'");
+            ValidateArgument(options, "genreport", 0);
+            ValidateArgument(options, "portfolio", 1);
+            ValidateArgument(options, "stock", 2);
+            ValidateArgument(options, "verbose", 3);
+            ValidateArgument(options, "dist-upgrade", 4);
+            ValidateArgument(options, "true/false", 5);
         }
 
         [TestMethod()]
+        [TestCategory("Parser")]
         public void TestArgumentsWithValue()
         {
             var options = Options.Parse(new string[]
@@ -53,27 +73,16 @@ namespace Copto.Tests
                 "--verbose=true and false at the same time.",
             });
 
-            Assert.IsNotNull(options.Arguments, "Arguments should not be null");
-            Assert.AreEqual(4, options.Arguments.Count);
+            ValidateResult(options, 4);
 
-            Assert.IsNotNull(options["genreport"], "There should be an argument called 'genreport'");
-            Assert.AreEqual(1, (options["genreport"]).Values.Count);
-            Assert.AreEqual("pdf", (options["genreport"]).Values[0]);
-
-            Assert.IsNotNull(options["portfolio"], "There should be an argument called 'portfolio'");
-            Assert.AreEqual(1, (options["portfolio"]).Values.Count);
-            Assert.AreEqual("all-inclusive", (options["portfolio"]).Values[0]);
-
-            Assert.IsNotNull(options["stock"], "There should be an argument called 'stock'");
-            Assert.AreEqual(1, (options["stock"]).Values.Count);
-            Assert.AreEqual(" / I can write thatever I want here! --like this or /this:ahahaha", (options["stock"]).Values[0]);
-
-            Assert.IsNotNull(options["verbose"], "There should be an argument called 'verbose'");
-            Assert.AreEqual(1, (options["verbose"]).Values.Count);
-            Assert.AreEqual("true and false at the same time.", (options["verbose"]).Values[0]);
+            ValidateArgument(options, "genreport", 0, "pdf");
+            ValidateArgument(options, "portfolio", 1, "all-inclusive");
+            ValidateArgument(options, "stock", 2, " / I can write thatever I want here! --like this or /this:ahahaha");
+            ValidateArgument(options, "verbose", 3, "true and false at the same time.");
         }
 
         [TestMethod()]
+        [TestCategory("Parser")]
         public void TestArgumentsWithMultipleValues()
         {
             var options = Options.Parse(new string[]
@@ -85,22 +94,14 @@ namespace Copto.Tests
                 "/linkwith:boost"
             });
 
-            Assert.IsNotNull(options.Arguments, "Arguments should not be null");
-            Assert.AreEqual(2, options.Arguments.Count);
+            ValidateResult(options, 2);
 
-            Assert.IsNotNull(options["o"], "There should be an argument called 'o'");
-            Assert.AreEqual(2, (options["o"]).Values.Count, "The argument 'o' should have 2 values");
-            Assert.IsTrue((options["o"]).Values.Contains("report.pdf"));
-            Assert.IsTrue((options["o"]).Values.Contains("report2.pdf"));
-
-            Assert.IsNotNull(options["linkwith"], "There should be an argument called 'linkwith'");
-            Assert.AreEqual(3, (options["linkwith"]).Values.Count, "The argument 'linkwith' should have 2 values");
-            Assert.IsTrue((options["linkwith"]).Values.Contains("glibc"));
-            Assert.IsTrue((options["linkwith"]).Values.Contains("ncurses"));
-            Assert.IsTrue((options["linkwith"]).Values.Contains("boost"));
+            ValidateArgument(options, "o", 0, "report.pdf", "report2.pdf");
+            ValidateArgument(options, "linkwith", 1, "glibc", "ncurses", "boost");
         }
 
         [TestMethod()]
+        [TestCategory("Parser")]
         public void TestArgumentsSeparatedFromValues()
         {
             var options = Options.Parse(new string[]
@@ -114,22 +115,15 @@ namespace Copto.Tests
                 "true"
             });
 
-            Assert.IsNotNull(options.Arguments, "Arguments should not be null");
-            Assert.AreEqual(3, options.Arguments.Count);
+            ValidateResult(options, 3);
 
-            Assert.IsNotNull(options["o"], "There should be an argument called 'o'");
-            Assert.AreEqual(2, (options["o"]).Values.Count, "The argument 'o' should have 2 values");
-            Assert.IsTrue((options["o"]).Values.Contains("report.pdf"));
-            Assert.IsTrue((options["o"]).Values.Contains("kappa.pdf"));
-
-            Assert.IsNotNull(options["report.pdf"], "There should be an argument called 'report.pdf'");
-
-            Assert.IsNotNull(options["verbose"], "There should be an argument called 'verbose'");
-            Assert.AreEqual(1, (options["verbose"]).Values.Count);
-            Assert.AreEqual("true", (options["verbose"]).Values[0]);
+            ValidateArgument(options, "o", 0, "report.pdf", "kappa.pdf");
+            ValidateArgument(options, "report.pdf", 1);
+            ValidateArgument(options, "verbose", 2, "true");
         }
 
         [TestMethod]
+        [TestCategory("Parser")]
         public void TestAllKindOfArguments()
         {
             var options = Options.Parse(new string[]
@@ -157,50 +151,24 @@ namespace Copto.Tests
                 "--disable-multilib:96",
                 });
 
-            Assert.IsNotNull(options.Arguments, "Arguments should not be null");
-            Assert.AreEqual(16, options.Arguments.Count);
+            ValidateResult(options, 16);
 
-            Assert.IsNotNull(options["compile"]);
-
-            Assert.IsNotNull(options["project"]);
-
-            Assert.IsNotNull(options["name"], "There should be an argument called 'name'");
-            Assert.AreEqual("test_project", (options["name"]).Values[0]);
-
-            Assert.IsNotNull(options["working-dir"]);
-
-            Assert.IsNotNull(options["home/projects/"]);
-
-            Assert.IsNotNull(options["prefix"], "There should be an argument called 'prefix'");
-            Assert.AreEqual("/opt/gcc43", (options["prefix"]).Values[0]);
-
-            Assert.IsNotNull(options["program-suffix"], "There should be an argument called 'program-suffix'");
-            Assert.AreEqual("43", (options["program-suffix"]).Values[0]);
-
-            Assert.IsNotNull(options["enable-languages"], "There should be an argument called 'enable-languages'");
-            Assert.AreEqual("c,c++", (options["enable-languages"]).Values[0]);
-
-            Assert.IsNotNull(options["enabled-shared"], "There should be an argument called 'enabled-shared'");
-            Assert.AreEqual("true OR FALSE doesn't matter, the program will read this.", (options["enabled-shared"]).Values[0]);
-
-            Assert.IsNotNull(options["enabled-pthreads"]);
-
-            Assert.IsNotNull(options["disable-checking"], "There should be an argument called 'disable-checking'");
-            Assert.AreEqual("false", (options["disable-checking"]).Values[0]);
-
-            Assert.IsNotNull(options["with-system-zlib"]);
-
-            Assert.IsNotNull(options["enable-__cxa_atexit"]);
-
-            Assert.IsNotNull(options["FALSE"]);
-
-            Assert.IsNotNull(options["disable-libunwind-exceptions"]);
-
-            Assert.IsNotNull(options["disable-multilib"]);
-            Assert.AreEqual(3, (options["disable-multilib"]).Values.Count, "The argument 'disable-multilib' should have 3 values");
-            Assert.IsTrue((options["disable-multilib"]).Values.Contains("64"));
-            Assert.IsTrue((options["disable-multilib"]).Values.Contains("32"));
-            Assert.IsTrue((options["disable-multilib"]).Values.Contains("96"));
+            ValidateArgument(options, "compile", 0);
+            ValidateArgument(options, "project", 1);
+            ValidateArgument(options, "name", 2, "test_project");
+            ValidateArgument(options, "working-dir", 3);
+            ValidateArgument(options, "home/projects/", 4);
+            ValidateArgument(options, "prefix", 5, "/opt/gcc43");
+            ValidateArgument(options, "program-suffix", 6, "43");
+            ValidateArgument(options, "enable-languages", 7, "c,c++");
+            ValidateArgument(options, "enabled-shared", 8, "true OR FALSE doesn't matter, the program will read this.");
+            ValidateArgument(options, "enabled-pthreads", 9);
+            ValidateArgument(options, "disable-checking", 10, "false");
+            ValidateArgument(options, "with-system-zlib", 11);
+            ValidateArgument(options, "enable-__cxa_atexit", 12);
+            ValidateArgument(options, "FALSE", 13);
+            ValidateArgument(options, "disable-libunwind-exceptions", 14);
+            ValidateArgument(options, "disable-multilib", 15, "64", "32", "96");
         }
 
     }

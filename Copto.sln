@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copto", "Copto.csproj", "{7A1256A2-3F58-4158-A2DC-66F0D278B450}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copto", "Copto\Copto.csproj", "{7A1256A2-3F58-4158-A2DC-66F0D278B450}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copto.Tests", "..\Copto.Tests\Copto.Tests.csproj", "{D8E7586B-1151-4F33-9B9E-01C709EFF220}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copto.CommandLine", "Copto.CommandLine\Copto.CommandLine.csproj", "{186A03C9-879E-4046-9DC4-D50525D80ED7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copto.Tests", "Copto.Tests\Copto.Tests.csproj", "{D8E7586B-1151-4F33-9B9E-01C709EFF220}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{D8E7586B-1151-4F33-9B9E-01C709EFF220}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8E7586B-1151-4F33-9B9E-01C709EFF220}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8E7586B-1151-4F33-9B9E-01C709EFF220}.Release|Any CPU.Build.0 = Release|Any CPU
-		{186A03C9-879E-4046-9DC4-D50525D80ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{186A03C9-879E-4046-9DC4-D50525D80ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{186A03C9-879E-4046-9DC4-D50525D80ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{186A03C9-879E-4046-9DC4-D50525D80ED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
