@@ -7,6 +7,29 @@ using System.Threading.Tasks;
 
 namespace Copto
 {
+
+    /// <summary>
+    /// A rule representa a tuple containing an argument to match, a callback function which handles its value(s) and an optional index
+    /// which allows to only match an argument if it's found at a particular position
+    /// </summary>
+    public class RuleInfo
+    {
+
+        public RuleInfo(string rule, Delegate callback, int? index)
+        {
+            this.Rule = rule;
+            this.Callback = callback;
+            this.Index = index;
+        }
+
+        public string Rule { get; set; }
+
+        public Delegate Callback { get; set; }
+
+        public int? Index { get; set; }
+
+    }
+
     public class RuleSet : IEnumerable<RuleInfo>
     {
 
@@ -14,7 +37,7 @@ namespace Copto
 
         public RuleSet()
         {
-            
+
         }
 
         public void Add(string rule, Delegate callback, int? index = null)
@@ -24,7 +47,7 @@ namespace Copto
 
         public void Add(string rule, Action callback, int? index = null)
         {
-            // Call with argument but ignore it
+            // Call with argument but ignore the result
             Rules.Add(new RuleInfo(rule, new Action<string>((s) => callback()), index));
         }
 

@@ -6,16 +6,48 @@ using System.Threading.Tasks;
 
 namespace Copto
 {
+
+    public class ParserException : Exception
+    {
+
+        public ParserException(string message) : base(message)
+        {
+
+        }
+
+    }
+
+    public class ParserOptions
+    {
+
+        public bool CaseSensitive { get; set; } = true;
+
+    }
+
+    /// <summary>
+    /// Represents a generic command-line argument
+    /// </summary>
+    public class Argument
+    {
+
+        public string Name { get; set; }
+
+        public int Index { get; set; }
+
+        public List<string> Values { get; set; } = new List<string>();
+
+    }
+
     public class Options
     {
 
         static readonly char[] ValueSeparators = new char[] { '=', ':' };
         static readonly char[] ArgumentNamePrefix = new char[] { '-', '/' };
 
-        public static Options Parse(string[] args, ParsingOptions parsingOptions = null)
+        public static Options Parse(string[] args, ParserOptions parsingOptions = null)
         {
             if (parsingOptions == null)
-                parsingOptions = new ParsingOptions();
+                parsingOptions = new ParserOptions();
 
             var options = new Options()
             {
@@ -118,7 +150,7 @@ namespace Copto
         }
 
         void ApplyRule(string rule, Delegate callback, int? index = null)
-        {            
+        {
             // Get all the aliases. Prefixes and suffixes are ignored by the matching engine
             var argsNames = rule.TrimStart('-', '/').TrimEnd('=', ':').Split('|');
 
@@ -129,7 +161,7 @@ namespace Copto
                            where string.Compare(arg.Name, name, !ParsingOptions.CaseSensitive) == 0 && (!index.HasValue || arg.Index == index.Value)
                            select arg;
 
-            foreach(var match in matching)
+            foreach (var match in matching)
             {
                 ApplyArgument(match, callback);
             }
@@ -143,7 +175,7 @@ namespace Copto
             }
         }
 
-        public ParsingOptions ParsingOptions { get; set; } = null;
+        public ParserOptions ParsingOptions { get; set; } = null;
 
         public List<Argument> Arguments { get; } = new List<Argument>();
 
