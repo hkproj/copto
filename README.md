@@ -15,7 +15,7 @@ Quick examples
 -------------
 Command line:
 
-	    ./myprogram generate-report --days 4 --pi="3.14" --use "GOOG" -add "MSFT" /use:"YHOO" /Add "AMZN" --o "report.pdf"
+`./myprogram generate-report --days 4 --pi="3.14" --use "GOOG" -add "MSFT" /use:"YHOO" /Add "AMZN" --o "report.pdf"`
 
 Parsing:
 ```csharp
