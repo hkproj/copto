@@ -1,5 +1,7 @@
 Copto
 ===================
+[![Build Status](https://travis-ci.org/hkproj/copto.svg?branch=master)](https://travis-ci.org/hkproj/copto)
+
 Copto is a C# library that lets you *incrementally* parse your command line arguments.
 
 Features
