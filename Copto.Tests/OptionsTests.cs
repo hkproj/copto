@@ -1,13 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 
 namespace Copto.Tests
 {
-    [TestClass()]
+    [TestFixture()]
     public class OptionsTests
     {
 
@@ -19,8 +14,7 @@ namespace Copto.Tests
             };
         }
 
-        [TestMethod()]
-        [TestCategory("Rules")]
+        [Test, TestCaseSource(typeof(Options), "Rules")]
         public void TestEmptyRules()
         {
             var options = Options.Parse(new string[]
@@ -39,8 +33,7 @@ namespace Copto.Tests
             Assert.IsTrue(true);
         }
 
-        [TestMethod]
-        [TestCategory("Rules")]
+        [Test, TestCaseSource(typeof(Options), "Rules")]
         public void TestCaseSensitiveness()
         {
             var options = Options.Parse(new string[]
@@ -83,8 +76,7 @@ namespace Copto.Tests
             Assert.IsTrue(stock.Value, "stock");
         }
 
-        [TestMethod]
-        [TestCategory("Rules")]
+        [Test, TestCaseSource(typeof(Options), "Rules")]
         public void TestRulesWithoutValuesWithoutIndices()
         {
             var options = Options.Parse(new string[]
@@ -114,8 +106,7 @@ namespace Copto.Tests
             Assert.IsTrue(verbose.Value, "verbose");
         }
 
-        [TestMethod()]
-        [TestCategory("Rules")]
+        [Test, TestCaseSource(typeof(Options), "Rules")]
         public void TestRulesWithoutValuesWithIndices()
         {
             var options = Options.Parse(new string[]

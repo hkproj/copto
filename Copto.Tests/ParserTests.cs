@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
+using System.Linq;
 
 namespace Copto.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ParserTests
     {
 
@@ -26,8 +26,7 @@ namespace Copto.Tests
             }
         }
 
-        [TestMethod()]
-        [TestCategory("Parser")]
+        [Test, TestCaseSource(typeof(Options), "Parser")]
         public void TestEmptyArguments()
         {
             var options = Options.Parse(new string[]
@@ -37,8 +36,7 @@ namespace Copto.Tests
             ValidateResult(options, 0);
         }
 
-        [TestMethod]
-        [TestCategory("Parser")]
+        [Test, TestCaseSource(typeof(Options), "Parser")]
         public void TestArgumentsWithoutValue()
         {
             var options = Options.Parse(new string[]
@@ -61,8 +59,7 @@ namespace Copto.Tests
             ValidateArgument(options, "true/false", 5);
         }
 
-        [TestMethod()]
-        [TestCategory("Parser")]
+        [Test, TestCaseSource(typeof(Options), "Parser")]
         public void TestArgumentsWithValue()
         {
             var options = Options.Parse(new string[]
@@ -81,8 +78,7 @@ namespace Copto.Tests
             ValidateArgument(options, "verbose", 3, "true and false at the same time.");
         }
 
-        [TestMethod()]
-        [TestCategory("Parser")]
+        [Test, TestCaseSource(typeof(Options), "Parser")]
         public void TestArgumentsWithMultipleValues()
         {
             var options = Options.Parse(new string[]
@@ -100,8 +96,7 @@ namespace Copto.Tests
             ValidateArgument(options, "linkwith", 1, "glibc", "ncurses", "boost");
         }
 
-        [TestMethod()]
-        [TestCategory("Parser")]
+        [Test, TestCaseSource(typeof(Options), "Parser")]
         public void TestArgumentsSeparatedFromValues()
         {
             var options = Options.Parse(new string[]
@@ -122,8 +117,7 @@ namespace Copto.Tests
             ValidateArgument(options, "verbose", 2, "true");
         }
 
-        [TestMethod]
-        [TestCategory("Parser")]
+        [Test, TestCaseSource(typeof(Options), "Parser")]
         public void TestAllKindOfArguments()
         {
             var options = Options.Parse(new string[]
