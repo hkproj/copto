@@ -9,19 +9,31 @@ namespace Copto
     public static class ExtensionMethods
     {
 
-        public static bool StartsWith(this string str, params char[] prefixes)
+        /// <summary>
+        /// Returns true if <paramref name="str"/> starts with any of the prefixes in <paramref name="prefixes"/>
+        /// </summary>
+        public static bool StartsWithAny(this string str, params char[] prefixes)
         {
+            if (str.Length == 0) return false; // Empty string
+            var start = str[0];
+
             foreach(var prefix in prefixes)
-                if (str.StartsWith(prefix.ToString()))
+                if (start == prefix)
                     return true;
 
             return false;
         }
 
-        public static bool EndsWith(this string str, params char[] prefixes)
+        /// <summary>
+        /// Returns true if <paramref name="str"/> ends with any of the suffixes in <paramref name="suffixes"/>
+        /// </summary>
+        public static bool EndsWithAny(this string str, params char[] suffixes)
         {
-            foreach (var prefix in prefixes)
-                if (str.EndsWith(prefix.ToString()))
+            if (str.Length == 0) return false; // Empty string
+            var end = str[str.Length - 1];
+
+            foreach (var suffix in suffixes)
+                if (end == suffix)
                     return true;
 
             return false;

@@ -65,7 +65,7 @@ namespace Copto
                 bool hasValue = valueSeparatorIndex >= 0;
 
                 // If the name of the argument starts with one of the prefixes, it might require a value
-                bool mightRequireValue = arg.StartsWith(ArgumentNamePrefix);
+                bool mightRequireValue = arg.StartsWithAny(ArgumentNamePrefix);
 
                 // Read argument name
                 string argName = null;
@@ -82,7 +82,7 @@ namespace Copto
                 {
                     // Check if the next object in the array is the value of the current argument
                     // We only check if it's prefixed or not.
-                    if (mightRequireValue && i != (args.Length - 1) && !args[i + 1].StartsWith(ArgumentNamePrefix))
+                    if (mightRequireValue && i != (args.Length - 1) && !args[i + 1].StartsWithAny(ArgumentNamePrefix))
                     {
                         // The next object in the array is the value for the current argument
                         hasValue = true;
