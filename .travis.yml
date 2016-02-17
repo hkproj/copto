@@ -1,4 +1,3 @@
 language: csharp
 solution: Copto.sln
-mono:
-	latest
+mono: latest
