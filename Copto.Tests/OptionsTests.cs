@@ -33,6 +33,50 @@ namespace Copto.Tests
 
         [TestMethod]
         [TestCategory("Rules")]
+        public void TestCaseSensitiveness()
+        {
+            var options = Options.Parse(new string[]
+            {
+                "gen-report",
+                "/Portfolio",
+                "-sTock",
+                "--verbose",
+            }, new ParserOptions()
+            {
+                CaseSensitive = true
+            });
+
+            string operation = null;
+            bool? portfolio = null, stock = null, verbose = null;
+
+            options.Apply(new RuleSet()
+            {
+                { "gen-report", () => operation = "gen-report" },
+                { "portfolio", () => portfolio= true },
+                { "stock", () => stock = true },
+                { "verbose", (v) => verbose = v ?? true }
+            });
+
+            Assert.AreEqual("gen-report", operation, "operation");
+            Assert.IsNull(portfolio, "portfolio should be null");
+            Assert.IsNull(stock, "stock should be null");
+            Assert.IsNotNull(verbose, "verbose should not be null");
+            Assert.IsTrue(verbose.Value, "verbose");
+
+            options.Apply(new RuleSet()
+            {
+                { "Portfolio", () => portfolio = true },
+                { "sTock", () => stock = true }
+            });
+
+            Assert.IsNotNull(portfolio, "portfolio shoult not be null");
+            Assert.IsTrue(portfolio.Value, "portfolio");
+            Assert.IsNotNull(stock, "stock should not be null");
+            Assert.IsTrue(stock.Value, "stock");
+        }
+
+        [TestMethod]
+        [TestCategory("Rules")]
         public void TestRulesWithoutValuesWithoutIndices()
         {
             var options = Options.Parse(new string[]
