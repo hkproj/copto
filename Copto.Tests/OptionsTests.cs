@@ -11,6 +11,14 @@ namespace Copto.Tests
     public class OptionsTests
     {
 
+        ParserOptions GetDefaultParserOptions()
+        {
+            return new ParserOptions()
+            {
+                CaseSensitive = false
+            };
+        }
+
         [TestMethod()]
         [TestCategory("Rules")]
         public void TestEmptyRules()
@@ -21,7 +29,7 @@ namespace Copto.Tests
                 "/portfolio",
                 "-stock",
                 "--verbose",
-            });
+            }, GetDefaultParserOptions());
 
             options.Apply(new RuleSet()
             {
@@ -85,7 +93,7 @@ namespace Copto.Tests
                 "/portfolio",
                 "-stock",
                 "--verbose",
-            });
+            }, GetDefaultParserOptions());
 
             string operation = null;
             bool? portfolio = null;
@@ -116,7 +124,7 @@ namespace Copto.Tests
                 "/portfolio",
                 "-stock",
                 "--verbose",
-            });
+            }, GetDefaultParserOptions());
 
             string operation = null;
             bool? portfolio = null;
