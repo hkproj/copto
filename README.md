@@ -1,6 +1,6 @@
 Copto
 ===================
-Copto is a C# library that lets you *gradually* parse your command line arguments.
+Copto is a C# library that lets you *incrementally* parse your command line arguments.
 
 Features
 -------------
@@ -18,7 +18,7 @@ Command line args:
 	    ./myprogram generate-report --days 4 --pi="3.14" --use "GOOG" -add "MSFT" /use:"YHOO" /Add "AMZN" --o "report.pdf"
 
 Parsing:
-
+	```C#
     static Options Opts;
     
     static void Main(string[] args)
@@ -58,3 +58,4 @@ Parsing:
     
         generator.Generate();
     }
+	```
