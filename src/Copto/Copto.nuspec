@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Copto</id>
+    <version>$version$</version>
+    <title>Copto</title>
+    <authors>Umar Jamil</authors>
+    <owners>Umar Jamil</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/hkproj/copto</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# library that incrementally parses command line arguments.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>args,cmd,command,line</tags>
+  </metadata>
+</package>
