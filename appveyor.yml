@@ -5,3 +5,6 @@ build:
   project: src\Copto.sln
 before_build:
   - nuget restore src\Copto.sln
+artifacts:
+  - path: src\Copto\bin\$(CONFIGURATION)\Copto.dll
+    name: 'Copto.dll'
