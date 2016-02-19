@@ -15,6 +15,71 @@ Copto can parse the following:
 
 Quick examples
 -------------
+#### Parse
+Start by parsing the arguments and saving the result into a variable
+
+```csharp
+using Copto;
+var opts = Options.Parse(args);
+```
+
+#### Switches
+```csharp
+Opts.Apply(new RuleSet()
+{
+	// Use multiple aliases
+	{ "generate-report|genreport|gr", () => operation = OperationType.GenerateReport }
+});
+```
+
+#### Boolean switches
+```csharp
+Opts.Apply(new RuleSet()
+{
+	// A null value is passed in case the user didn't specify "true" or "false" explicitly after the switch.
+	// The following code activates the "verbose mode" even if the user only specified "--verbose" (or "--v")
+	{ "v|verbose", (val) => verbose = val ?? true }
+});
+```
+
+#### Arguments with single value
+```csharp
+Opts.Apply(new RuleSet()
+{
+	{ "o|output", (val) => outputFile = val },
+	// Integer value
+	{ "p|priority",  delegate (int? val) { jobPriority = val; } }
+	// Floating-point value
+	{ "s|seed", delegate (float? val) { randomSeed = val; } }
+});
+```
+
+#### Arguments with multiple value
+```csharp
+Opts.Apply(new RuleSet()
+{
+	{ "l|link|link-with", (val) => linkWith.Add(val) }
+});
+```
+
+#### Specify argument position
+Copto allows you to detect arguments only if they are found at a specific position; this is very useful if the first argument is the type of operation to perform. For example a package management tool might have the following rules:
+```csharp
+Opts.Apply(new RuleSet()
+{
+	// Only if the argument is found at position "0" (first)
+	{ "update", () => operation = OperationType.Update, 0 },
+	{ "install", () => operation = OperationType.Install, 0 },
+	{ "delete", () => operation = OperationType.Delete, 0 },
+	// and here only if the argument is found at position "1" (second argument)
+	{ "package", () => objectType = ObjectTypes.Package, 1 },
+	{ "system", () => objectType = ObjectTypes.System, 1 },
+	{ "repository", () => objectType = ObjectTypes.Repository, 1 }
+});
+```
+
+Full example
+-------------
 Command line:
 
 `./myprogram generate-report --days 4 --pi="3.14" --use "GOOG" -add "MSFT" /use:"YHOO" /Add "AMZN" --o "report.pdf"`
