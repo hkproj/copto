@@ -2,7 +2,7 @@ Copto
 ===================
 [![Build status](https://ci.appveyor.com/api/projects/status/s1ik7y6t076rt0k6?svg=true)](https://ci.appveyor.com/project/hkproj/copto)
 
-Copto is a C# library that lets you *incrementally* parse command line arguments. This means you don't have to create a huge class to hold all your options: you parse/detect arguments only when you need them.
+Copto is a C# library that lets you *incrementally* parse command line arguments. This means you don't have to create a huge class to hold all your options: parse/detect arguments only when you need them.
 
 Features
 -------------
