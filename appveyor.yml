@@ -7,4 +7,5 @@ before_build:
   - nuget restore src\Copto.sln
 artifacts:
   - path: src\Copto\bin\$(CONFIGURATION)\Copto.dll
-    name: 'Copto.dll'
+    name: 'Binaries'
+    type: zip
