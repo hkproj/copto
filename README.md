@@ -89,12 +89,16 @@ opts.Apply(new RuleSet()
 
 Full example
 -------------
-Command line:
+The examples shows a simple report generation program. The program is launched with the following arguments:
 
 `./myprogram generate-report --days 4 --pi="3.14" --use "GOOG" -add "MSFT" /use:"YHOO" /Add "AMZN" --o "report.pdf"`
 
-Parsing:
+As you can see there are integer values, floating point values and multiple arguments with the same name (but different format).
+
+Parsing is easy and is done incrementally, which means the arguments are parsed only when needed:
 ```csharp
+using Copto;
+
 static Options Opts;
 
 static void Main(string[] args)
