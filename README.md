@@ -16,16 +16,25 @@ Copto can parse the following:
 Quick examples
 -------------
 #### Parse
+Import the library
+```csharp
+using Copto;
+```
+
 Start by parsing the arguments and saving the result into a variable
 
 ```csharp
-using Copto;
 var opts = Options.Parse(args);
+```
+
+You can turn of case sensitivity
+```csharp
+var opts = Options.Parse(args, new ParserOptions() { CaseSensitive = false });
 ```
 
 #### Switches
 ```csharp
-Opts.Apply(new RuleSet()
+opts.Apply(new RuleSet()
 {
 	// Use multiple aliases
 	{ "generate-report|genreport|gr", () => operation = OperationType.GenerateReport }
@@ -34,7 +43,7 @@ Opts.Apply(new RuleSet()
 
 #### Boolean switches
 ```csharp
-Opts.Apply(new RuleSet()
+opts.Apply(new RuleSet()
 {
 	// A null value is passed in case the user didn't specify "true" or "false" explicitly after the switch.
 	// The following code activates the "verbose mode" even if the user only specified "--verbose" (or "--v")
@@ -44,7 +53,7 @@ Opts.Apply(new RuleSet()
 
 #### Arguments with single value
 ```csharp
-Opts.Apply(new RuleSet()
+opts.Apply(new RuleSet()
 {
 	{ "o|output", (val) => outputFile = val },
 	// Integer value
@@ -56,7 +65,7 @@ Opts.Apply(new RuleSet()
 
 #### Arguments with multiple value
 ```csharp
-Opts.Apply(new RuleSet()
+opts.Apply(new RuleSet()
 {
 	{ "l|link|link-with", (val) => linkWith.Add(val) }
 });
@@ -65,7 +74,7 @@ Opts.Apply(new RuleSet()
 #### Specify argument position
 Copto allows you to detect arguments only if they are found at a specific position; this is very useful if the first argument is the type of operation to perform. For example a package management tool might have the following rules:
 ```csharp
-Opts.Apply(new RuleSet()
+opts.Apply(new RuleSet()
 {
 	// Only if the argument is found at position "0" (first)
 	{ "update", () => operation = OperationType.Update, 0 },
