@@ -2,5 +2,6 @@ version: 1.0.{build}
 configuration: Release
 build:
   verbosity: minimal
+  project: src\Copto.sln
 before_build:
   - nuget restore
