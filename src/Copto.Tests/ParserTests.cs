@@ -26,7 +26,7 @@ namespace Copto.Tests
             }
         }
 
-        [Test, TestCaseSource(typeof(Options), "Parser")]
+        [Test]
         public void TestEmptyArguments()
         {
             var options = Options.Parse(new string[]
@@ -36,7 +36,7 @@ namespace Copto.Tests
             ValidateResult(options, 0);
         }
 
-        [Test, TestCaseSource(typeof(Options), "Parser")]
+        [Test]
         public void TestArgumentsWithoutValue()
         {
             var options = Options.Parse(new string[]
@@ -59,7 +59,7 @@ namespace Copto.Tests
             ValidateArgument(options, "true/false", 5);
         }
 
-        [Test, TestCaseSource(typeof(Options), "Parser")]
+        [Test]
         public void TestArgumentsWithValue()
         {
             var options = Options.Parse(new string[]
@@ -78,7 +78,7 @@ namespace Copto.Tests
             ValidateArgument(options, "verbose", 3, "true and false at the same time.");
         }
 
-        [Test, TestCaseSource(typeof(Options), "Parser")]
+        [Test]
         public void TestArgumentsWithMultipleValues()
         {
             var options = Options.Parse(new string[]
@@ -96,7 +96,7 @@ namespace Copto.Tests
             ValidateArgument(options, "linkwith", 1, "glibc", "ncurses", "boost");
         }
 
-        [Test, TestCaseSource(typeof(Options), "Parser")]
+        [Test]
         public void TestArgumentsSeparatedFromValues()
         {
             var options = Options.Parse(new string[]
@@ -117,7 +117,7 @@ namespace Copto.Tests
             ValidateArgument(options, "verbose", 2, "true");
         }
 
-        [Test, TestCaseSource(typeof(Options), "Parser")]
+        [Test]
         public void TestAllKindOfArguments()
         {
             var options = Options.Parse(new string[]

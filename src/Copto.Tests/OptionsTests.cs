@@ -14,7 +14,7 @@ namespace Copto.Tests
             };
         }
 
-        [Test, TestCaseSource(typeof(Options), "Rules")]
+        [Test]
         public void TestEmptyRules()
         {
             var options = Options.Parse(new string[]
@@ -33,7 +33,7 @@ namespace Copto.Tests
             Assert.IsTrue(true);
         }
 
-        [Test, TestCaseSource(typeof(Options), "Rules")]
+        [Test]
         public void TestCaseSensitiveness()
         {
             var options = Options.Parse(new string[]
@@ -76,7 +76,7 @@ namespace Copto.Tests
             Assert.IsTrue(stock.Value, "stock");
         }
 
-        [Test, TestCaseSource(typeof(Options), "Rules")]
+        [Test]
         public void TestRulesWithoutValuesWithoutIndices()
         {
             var options = Options.Parse(new string[]
@@ -106,7 +106,7 @@ namespace Copto.Tests
             Assert.IsTrue(verbose.Value, "verbose");
         }
 
-        [Test, TestCaseSource(typeof(Options), "Rules")]
+        [Test]
         public void TestRulesWithoutValuesWithIndices()
         {
             var options = Options.Parse(new string[]
