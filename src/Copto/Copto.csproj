@@ -5,6 +5,13 @@
     <Authors>Umar Jamil</Authors>
     <Company>Umar Jamil</Company>
     <Description>Command-line arguments parser</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright></Copyright>
+    <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/hkproj/copto</PackageProjectUrl>
+	<PackageVersion>1.0.0</PackageVersion>
+    <RepositoryUrl>https://github.com/hkproj/copto</RepositoryUrl>
+    <PackageTags>command-line args cmd parser</PackageTags>
   </PropertyGroup>
 
 </Project>
